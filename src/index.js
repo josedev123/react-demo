@@ -3,32 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-// const element = <h1 className="testClass">React Demo</h1>;
+// function DisplayEmployeeInfo(employee) {}
 
+var DisplayEmployeeInfo=(employee)=>{
 
-
-// const element = (
-
-//   <div>
-
-//     <h1>React Demo</h1>
-
-//     <h2>React Rendering</h2>
-
-//   </div>
-
-// );
-
-
-// without JSX
-// const element = React.createElement("div",{className:"testClass"},'React Demo');
-
-const element = React.createElement("div",{className:"testClass"},
-
-React.createElement("h1",{className:"h1Class"}, "React Demo"),
-React.createElement("h2",{className:"h2Class"}, "Rendering without JSX")
-
-);
+  return <div>
+    <h1>Employee Details ...</h1>
+    <p>
+    <label> Employee ID : <b>{employee.Id}</b></label>
+    </p>
+    <p>
+    <label> Employee Name : <b>{employee.Name}</b></label>
+    </p>
+    <p>
+    <label> Employee Location : <b>{employee.Location}</b></label>
+    </p>
+  
+  </div>;
+  
+  };
+  
+  
+  const element=<DisplayEmployeeInfo Id="101" Name="test name" Location="Atlanta, GA" ></DisplayEmployeeInfo>
+  
 
 ReactDOM.render(element, document.getElementById("root"));
 
