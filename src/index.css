@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.employeeDetails{margin:10px;border: 1px solid #ccc;background:#ececec;padding:30px;}
+
+.deptInfo{padding: 10px; margin:10px 0px 0px; border: 1px solid #ccc;background:#fff;}
