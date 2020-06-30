@@ -3,42 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Employee extends React.Component{
+  state={
+    counter:0
+  };
+  addEmployee=()=>{
+    this.setState({counter:this.state.counter+1});
+  }
   render(){
-    return <div className="employeeDetails">
-        <h2>Employee Details</h2>
-        <p>
-          <label>Employee ID : <b>{this.props.Id}</b></label>
-        </p>
-        <p>
-          <label>Employee Name : <b>{this.props.Name}</b></label>
-        </p>
-        <p>
-          <label>Employee Location : <b>{this.props.Location}</b></label>
-        </p>
+    return <div>
+      <h2> Welcome</h2>
 
-      <Department DeptName={this.props.DeptName} HeadName={this.props.DeptName}></Department>
+<p>
+  <button onClick={this.addEmployee}>Add Employee</button>
+</p>
+  <p>Add Employee button clicked {this.state.counter} times</p>
     </div>
-  }
+     }
 }
+const element = <Employee></Employee>
 
-class Department extends React.Component{
-  render() {
-    return <div className="deptInfo">
-      <h2>Department Details</h2>
-
-      <p>
-          <label>Dept Name : <b>{this.props.DeptName}</b></label>
-        </p>
-
-        <p>
-          <label>Head Name : <b>{this.props.HeadName}</b></label>
-        </p>
-    </div>
-
-  }
-
-}
-
-const element =<Employee Id="2" Name="Employee Name" Location="Atlanta, GA" DeptName="dev" HeadName="Dept. Name"></Employee>
-
-ReactDOM.render(element, document.getElementById("root"));
+ReactDOM.render(element,document.getElementById("root"));
