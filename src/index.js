@@ -2,64 +2,59 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const employeeContext = React.createContext();
+const EmployeeContext = React.createContext({
+  data: '',
+  changeEmployeeInfo:()=>{}
+});
 
 class App extends React.Component {
   constructor(props){
     super(props);    
     this.state={
+      data: {
         Id:101,
         Name:'Pragim Tech',
         Location: 'Bangalore',
         Salary: 15000
-    };
+    },
+    changeEmployeeInfo: this.updateEmployeeDetails
   }
-  changeEmployeeData=()=>{
-    this.setState({Id:this.state.Id + 1});
   }
+
+  updateEmployeeDetails=()=>{
+    this.setState({
+      data: {
+        Id: 102
+      }
+    })
+  }
+
   render() {
     return <div>
       <h2>Welcome to App Component</h2> 
       <p>
-  <label>Employee Id: {this.state.Id}</label>
+          <label>Employee Id: {this.state.data.Id}</label>
       </p>
-      <employeeContext.Provider value={this.state}>
+      <EmployeeContext.Provider value={this.state}>
         
-      <Employee></Employee>
+        <Employee></Employee>
 
-      </employeeContext.Provider> 
-      <p>
-        <button onClick={this.changeEmployeeData}>Update</button>
-      </p>
+      </EmployeeContext.Provider> 
         </div>
   }
 }
 
 class Employee extends React.Component { 
-  static contextType = employeeContext; 
+  static contextType = EmployeeContext;
   render() {
     return <div>
       <h2>Welcome to Employee Component...</h2>  
-      <p>
-  <label>Employee Id: {this.context.Id}</label>
-      </p>
-      <Salary></Salary>    
+  <p>Employee Id: {this.context.data.Id}</p>
+  <button onClick={this.context.changeEmployeeInfo}>Change</button>
       </div>
   }
 }
 
-class Salary extends React.Component {
-  static contextType = employeeContext; 
-
-  render() {
-    return <div>
-      <h2>Welcome to Salary Component...</h2> 
-            <p>
-  <label>Employee Id: {this.context.Id}</label>
-      </p>    
-      </div>
-  }
-}
 
 let element = <App></App>
 
