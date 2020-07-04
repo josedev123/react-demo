@@ -6,52 +6,66 @@ class EmployeeComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state={
-      message:''
-    };
+    this.state = {
+      employee:{
+      Id:'',
+      Name:'',
+      Location:'',
+      Salary:''
+      }
+  };
+  }
+
+  changeHandler = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      employee:{
+        ...this.state.employee,
+        [name]: value
+      }
+    });
   }
 
   onCreateEmployee=()=>{
-    let empInfo={
-      Id:this.refs.Id.value,
-      Name:this.refs.Name.value,
-      Location:this.refs.Location.value,
-      Salary:this.refs.Salary.value
-    };
+    console.log(this.state.employee);    
+  }
 
-    fetch('https://localhost:44359/api/employee', {
-      method: 'POST',
-      headers:{'Content-type':'application/json'},
-      body: empInfo
-    }).then(res=>res.json()).then(res=>{
-      if(res){
-        this.setState({message:'New Employee Created'})
-      }
-    })
-  }
-  
   render() {
-    return (
-      <div>
-        <h2>Please Enter Employee Details</h2>
+    return(
+    <div>
+      <form>
         <p>
-          <label>Employee ID : <input type="text"  ref="Id"></input></label>
+            <label>Employee ID : <input type="text" name="Id" 
+                                  value={this.state.employee.Id} 
+                                  onChange={this.changeHandler} ></input>
+          </label>
         </p>
         <p>
-          <label>Employee Name : <input type="text" ref="Name"></input></label>
+          <label>Employee Name : <input type="text" name="Name" 
+                                  value={this.state.employee.Name} 
+                                  onChange={this.changeHandler}></input>
+          </label>
         </p>
         <p>
-          <label>Employee Location : <input type="text" ref="Location"></input></label>
+          <label>Employee Location : <input type="text" name="Location" 
+                                  value={this.state.employee.Location} 
+                                  onChange={this.changeHandler}></input>
+          </label>
         </p>
         <p>
-          <label>Employee Salary : <input type="text" ref="Salary"></input></label>
-        </p>
-        <button onClick={this.onCreateEmployee}>Create</button>
-        <p>{this.state.message}</p>
-      </div>
-      );
+          <label>Employee Salary : <input type="text" name="Salary"
+                                  value={this.state.employee.Salary} 
+                                  onChange={this.changeHandler}></input>
+          </label>
+        </p> 
+      </form>
+      <button onClick={this.onCreateEmployee}>Create</button>
+
+    </div>
+    )
   }
-}
+} 
 
 const element = <EmployeeComponent></EmployeeComponent>
 
