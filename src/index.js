@@ -2,60 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const EmployeeContext = React.createContext({
-  data: '',
-  changeEmployeeInfo:()=>{}
-});
+function Employee(props){
+  return <div style={{border:"3px solid red"}}>
 
-class App extends React.Component {
-  constructor(props){
-    super(props);    
-    this.state={
-      data: {
-        Id:101,
-        Name:'Pragim Tech',
-        Location: 'Bangalore',
-        Salary: 15000
-    },
-    changeEmployeeInfo: this.updateEmployeeDetails
-  }
-  }
+<p>Employee ID : <b>{props.data.Id}</b></p>
 
-  updateEmployeeDetails=()=>{
-    this.setState({
-      data: {
-        Id: 102
-      }
-    })
-  }
+<p>Employee Name : <b>{props.data.Name}</b></p>
 
-  render() {
-    return <div>
-      <h2>Welcome to App Component</h2> 
-      <p>
-          <label>Employee Id: {this.state.data.Id}</label>
-      </p>
-      <EmployeeContext.Provider value={this.state}>
-        
-        <Employee></Employee>
+<p>Employee Location : <b>{props.data.Location}</b></p>
 
-      </EmployeeContext.Provider> 
-        </div>
-  }
+<p>Employee Salary : <b>{props.data.Salary}</b></p>
+
+  </div>
 }
 
-class Employee extends React.Component { 
-  static contextType = EmployeeContext;
-  render() {
-    return <div>
-      <h2>Welcome to Employee Component...</h2>  
-  <p>Employee Id: {this.context.data.Id}</p>
-  <button onClick={this.context.changeEmployeeInfo}>Change</button>
-      </div>
-  }
+function DisplayEmployees(props) {
+
+  const empList=props.employeeList;
+
+  const listElements=empList.map((emp) =>
+
+<Employee key={emp.Id} data={emp}></Employee>
+
+  );
+
+  return (
+  <div>{listElements}</div>
+  )
+
 }
+const employees = [
+
+  {Id:101,Name:'Abhinav',Location:'Bangalore',Salary:12345},
+
+  {Id:102,Name:'Abhishek',Location:'Chennai',Salary:23456},
+
+  {Id:103,Name:'Ajay',Location:'Bangalore',Salary:34567}
+
+];
 
 
-let element = <App></App>
+const e = <DisplayEmployees employeeList={employees}></DisplayEmployees>
 
-ReactDOM.render(element,document.getElementById("root"));
+
+ReactDOM.render(e, document.getElementById("root"));
