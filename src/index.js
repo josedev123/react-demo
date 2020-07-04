@@ -1,48 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 
-function Employee(props){
-  return <div style={{border:"3px solid red"}}>
 
-<p>Employee ID : <b>{props.data.Id}</b></p>
+class EmployeeComponent extends React.Component {
+  constructor(props) {
+    super(props);
 
-<p>Employee Name : <b>{props.data.Name}</b></p>
-
-<p>Employee Location : <b>{props.data.Location}</b></p>
-
-<p>Employee Salary : <b>{props.data.Salary}</b></p>
-
-  </div>
+    this.state={
+      employees:[]
+    };
+  }
+  componentDidMount(){
+    fetch("https://localhost:44359/api/employee").then(res=>res.json())
+    .then(result=>{
+      this.setState({employees: result})
+    })
+  }
+  render() {
+    return (
+      <div>
+        <h2>Employees Data...</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Salary</th>
+            </tr>
+          </thead>
+          <tbody> 
+            {this.state.employees.map(emp => (
+              <tr key={emp.id}>
+              <td>{emp.Id}</td>
+              <td>{emp.Name}</td>
+              <td>{emp.Location}</td>
+              <td>{emp.Salary}</td>
+              </tr>
+            ))}        
+          </tbody>
+        </table>
+      </div>
+      );
+  }
 }
 
-function DisplayEmployees(props) {
+const element = <EmployeeComponent></EmployeeComponent>
 
-  const empList=props.employeeList;
-
-  const listElements=empList.map((emp) =>
-
-<Employee key={emp.Id} data={emp}></Employee>
-
-  );
-
-  return (
-  <div>{listElements}</div>
-  )
-
-}
-const employees = [
-
-  {Id:101,Name:'Abhinav',Location:'Bangalore',Salary:12345},
-
-  {Id:102,Name:'Abhishek',Location:'Chennai',Salary:23456},
-
-  {Id:103,Name:'Ajay',Location:'Bangalore',Salary:34567}
-
-];
-
-
-const e = <DisplayEmployees employeeList={employees}></DisplayEmployees>
-
-
-ReactDOM.render(e, document.getElementById("root"));
+ReactDOM.render(element, document.getElementById("root"));
