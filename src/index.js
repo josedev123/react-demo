@@ -7,39 +7,47 @@ class EmployeeComponent extends React.Component {
     super(props);
 
     this.state={
-      employees:[]
+      message:''
     };
   }
-  componentDidMount(){
-    fetch("https://localhost:44359/api/employee").then(res=>res.json())
-    .then(result=>{
-      this.setState({employees: result})
+
+  onCreateEmployee=()=>{
+    let empInfo={
+      Id:this.refs.Id.value,
+      Name:this.refs.Name.value,
+      Location:this.refs.Location.value,
+      Salary:this.refs.Salary.value
+    };
+
+    fetch('https://localhost:44359/api/employee', {
+      method: 'POST',
+      headers:{'Content-type':'application/json'},
+      body: empInfo
+    }).then(res=>res.json()).then(res=>{
+      if(res){
+        this.setState({message:'New Employee Created'})
+      }
     })
   }
+  
   render() {
     return (
       <div>
-        <h2>Employees Data...</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Salary</th>
-            </tr>
-          </thead>
-          <tbody> 
-            {this.state.employees.map(emp => (
-              <tr key={emp.id}>
-              <td>{emp.Id}</td>
-              <td>{emp.Name}</td>
-              <td>{emp.Location}</td>
-              <td>{emp.Salary}</td>
-              </tr>
-            ))}        
-          </tbody>
-        </table>
+        <h2>Please Enter Employee Details</h2>
+        <p>
+          <label>Employee ID : <input type="text"  ref="Id"></input></label>
+        </p>
+        <p>
+          <label>Employee Name : <input type="text" ref="Name"></input></label>
+        </p>
+        <p>
+          <label>Employee Location : <input type="text" ref="Location"></input></label>
+        </p>
+        <p>
+          <label>Employee Salary : <input type="text" ref="Salary"></input></label>
+        </p>
+        <button onClick={this.onCreateEmployee}>Create</button>
+        <p>{this.state.message}</p>
       </div>
       );
   }
